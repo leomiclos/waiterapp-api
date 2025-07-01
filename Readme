@@ -1,0 +1,99 @@
+# WaiterApp API
+
+API RESTful desenvolvida em TypeScript e Express para o **WaiterApp**, um sistema de gerenciamento de pedidos voltado para garçons e estabelecimentos gastronômicos.
+Gerencia categorias, produtos e pedidos com persistência em **MongoDB via container Docker**.
+
+---
+
+## 📁 Estrutura do projeto
+
+.
+├── src/
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   └── index.ts
+├── dist/
+├── Dockerfile
+├── docker-compose.yml
+├── package.json
+├── tsconfig.json
+└── README.md
+
+---
+
+## ✅ Pré-requisitos
+
+* [Node.js](https://nodejs.org/) (recomendado: versão 18 ou superior)
+* [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+## 🚀 Iniciando o projeto
+
+### 1. Clonar o repositório
+
+
+git clone https://github.com/seu-usuario/waiterapp-api.git
+cd waiterapp-api
+
+
+### 2. Instalar as dependências
+
+npm install
+
+
+### 3. Criar o arquivo `.env`
+
+Na raiz do projeto, crie um arquivo chamado `.env` com o seguinte conteúdo:
+
+MONGO_URL=mongodb://localhost:27017/waiterapp
+PORT=3001
+
+> Altere a `MONGO_URL` conforme o ambiente (Docker/local/produção).
+
+### 4. Rodar localmente em modo desenvolvimento
+
+
+npm run dev
+
+
+### 5. Gerar build para produção
+
+
+npm run build
+npm start
+
+
+
+## 🐳 Rodando com Docker
+
+### 1. Subir a stack com MongoDB e a API
+
+
+docker-compose up
+
+
+Isso irá iniciar:
+
+* Um container do **MongoDB** na porta `27017`
+* A **API** na porta `3001`
+
+### 2. Acessar a API
+
+Com os containers em execução, acesse:
+
+http://localhost:3001
+
+---
+
+## 🛠 Tecnologias
+
+* Node.js
+* Express
+* TypeScript
+* MongoDB
+* Mongoose
+* Docker e Docker Compose
+* ESLint e Prettier
+
