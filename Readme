@@ -9,10 +9,12 @@ Gerencia categorias, produtos e pedidos com persistência em **MongoDB via conta
 
 .
 ├── src/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
+│   ├── app/
+│       ├── models/
+│       ├── useCases/
+│   
 │   └── index.ts
+    └── router.ts
 ├── dist/
 ├── Dockerfile
 ├── docker-compose.yml
