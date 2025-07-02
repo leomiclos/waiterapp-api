@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response } from 'express';
 
-import { Products } from '../../app/models/Products';
+import { Products } from '../../models/Products';
 
 export async function listProducts(req: Request, res: Response) {
     try {
