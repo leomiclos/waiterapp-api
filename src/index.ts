@@ -5,6 +5,7 @@ import path from 'node:path';
 import { connectRabbitMQ } from '../lib/rabbitmq';
 
 import './workers/orderWorker';
+import './workers/statusWorker';
 
 async function bootstrap() {
   try {
@@ -17,7 +18,7 @@ async function bootstrap() {
 
     // Inicializar o app
     const app = express();
-    const PORT = process.env.PORT || 3000;
+    const PORT = 3000;
 
     app.use('/uploads', express.static(path.resolve(__dirname, '..', 'assets')));
     app.use(express.json());

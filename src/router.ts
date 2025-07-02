@@ -10,6 +10,7 @@ import { listOrders } from "./app/useCases/orders/listOrders";
 import { createOrder } from "./app/useCases/orders/createOrder";
 import { changeStatusOrder } from "./app/useCases/orders/changeStatusOrder";
 import { cancelOrder } from "./app/useCases/orders/cancelOrder";
+import { cancelAllOrders } from "./app/useCases/orders/cancelAllOrders";
 
 export const router = Router();
 
@@ -62,7 +63,4 @@ router.patch(
 //delete order
 router.delete('/orders/:orderId', cancelOrder as unknown as import('express').RequestHandler);
 
-//delete order
-// router.delete('/orders/:orderId', (req, res) => {
-//     res.send(`Pedido ${req.params.orderId} deletado com sucesso`);
-// });
+router.delete('/orders', cancelAllOrders as unknown as import('express').RequestHandler)
