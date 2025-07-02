@@ -9,7 +9,8 @@ mongoose.connect('mongodb://localhost:27017/waiterapp')
         const app = express();
         const PORT = process.env.PORT || 3000;
 
-        app.use(router)
+        app.use(express.json());
+        app.use('/api', router);
 
         app.listen(PORT, () => {
             console.log(`🚀 Server is running on port http://localhost:${PORT}`);

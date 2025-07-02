@@ -2,11 +2,6 @@ import { model, Schema } from 'mongoose'
 
 
 export const Products = model('Products', new Schema({
-    _id: {
-        type:
-            Schema.Types.ObjectId,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -34,7 +29,7 @@ export const Products = model('Products', new Schema({
         ref: 'Category',
         required: true
     },
-    imagePath: {
+    image: {
         type: String,
         required: false
     }
