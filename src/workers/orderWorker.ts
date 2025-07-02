@@ -42,7 +42,6 @@ async function start() {
 
                 } catch (err) {
                     console.error('[Worker] Erro ao processar pedido:', err);
-                    // Você pode decidir rejeitar com requeue=false para não tentar de novo
                     channel.nack(msg, false, false);
                 }
             }
