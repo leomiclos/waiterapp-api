@@ -6,49 +6,52 @@ import { OrderLog } from '../app/models/OrderLog';
 import 'dotenv/config';
 
 async function start() {
-  try {
-    await mongoose.connect(process.env.MONGO_URL!);
-    console.log('[MongoDB] Worker conectado com sucesso');
+    try {
 
-    const connection = await amqp.connect(process.env.RABBITMQ_URL!);
-    const channel = await connection.createChannel();
-    const queue = 'statusChange';
+        const mongoUri = process.env.MONGO_URL;
+        await mongoose.connect(mongoUri!);
 
-    await channel.assertQueue(queue, { durable: true });
-    console.log(`👷 Worker pronto. Escutando a fila "${queue}"...`);
+        console.log('[MongoDB] Worker conectado com sucesso');
 
-    channel.consume(queue, async (msg) => {
-      if (msg !== null) {
-        try {
-          const { orderId, status } = JSON.parse(msg.content.toString());
-          console.log('[Worker] Pedido status change recebido:', orderId, status);
+        const connection = await amqp.connect(process.env.RABBITMQ_URL!);
+        const channel = await connection.createChannel();
+        const queue = 'statusChange';
 
-          // Atualiza o status do pedido no banco
-          const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
-          if (!order) {
-            throw new Error(`Pedido ${orderId} não encontrado`);
-          }
+        await channel.assertQueue(queue, { durable: true });
+        console.log(`👷 Worker pronto. Escutando a fila "${queue}"...`);
 
-          // Cria log da alteração
-          await OrderLog.create({
-            orderId: order._id,
-            table: order.table,
-            status: order.status,
-            createdAt: new Date(),
-          });
+        channel.consume(queue, async (msg) => {
+            if (msg !== null) {
+                try {
+                    const { orderId, status } = JSON.parse(msg.content.toString());
+                    console.log('[Worker] Pedido status change recebido:', orderId, status);
 
-          console.log('[Worker] Pedido atualizado e log salvo');
+                    // Atualiza o status do pedido no banco
+                    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+                    if (!order) {
+                        throw new Error(`Pedido ${orderId} não encontrado`);
+                    }
 
-          channel.ack(msg); // confirma que processou
-        } catch (err) {
-          console.error('[Worker] Erro ao processar pedido:', err);
-          channel.nack(msg, false, false); // rejeita e não requeue
-        }
-      }
-    });
-  } catch (error) {
-    console.error('❌ Erro no worker:', error);
-  }
+                    // Cria log da alteração
+                    await OrderLog.create({
+                        orderId: order._id,
+                        table: order.table,
+                        status: order.status,
+                        createdAt: new Date(),
+                    });
+
+                    console.log('[Worker] Pedido atualizado e log salvo');
+
+                    channel.ack(msg); // confirma que processou
+                } catch (err) {
+                    console.error('[Worker] Erro ao processar pedido:', err);
+                    channel.nack(msg, false, false); // rejeita e não requeue
+                }
+            }
+        });
+    } catch (error) {
+        console.error('❌ Erro no worker:', error);
+    }
 }
 
 start();

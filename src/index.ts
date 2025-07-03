@@ -13,8 +13,10 @@ dotenvFlow.config();
 
 async function bootstrap() {
   try {
+
+    const mongoUri = process.env.MONGO_URL;
     // Conectar ao MongoDB
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(mongoUri!);
     console.log('[MongoDB] Conectado com sucesso');
 
     // Conectar ao RabbitMQ

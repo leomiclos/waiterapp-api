@@ -8,7 +8,9 @@ import 'dotenv/config';
 async function start() {
     try {
         // 1. Conectar ao MongoDB
-        await mongoose.connect(process.env.MONGO_URL!);
+        const mongoUri = process.env.MONGO_URL;
+
+        await mongoose.connect(mongoUri!);
         console.log('[MongoDB] Worker conectado com sucesso');
 
         // 2. Conectar ao RabbitMQ
