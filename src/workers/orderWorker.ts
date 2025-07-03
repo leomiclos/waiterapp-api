@@ -2,16 +2,17 @@
 import amqp from 'amqplib';
 import mongoose from 'mongoose';
 import { OrderLog } from '../app/models/OrderLog';
+import 'dotenv/config';
 
 
 async function start() {
     try {
         // 1. Conectar ao MongoDB
-        await mongoose.connect('mongodb://mongo:27017/waiterapp');
+        await mongoose.connect(process.env.MONGO_URL!);
         console.log('[MongoDB] Worker conectado com sucesso');
 
         // 2. Conectar ao RabbitMQ
-        const connection = await amqp.connect('amqp://localhost');
+        const connection = await amqp.connect(process.env.RABBITMQ_URL!);
         const channel = await connection.createChannel();
         const queue = 'orders';
 

@@ -3,13 +3,14 @@ import amqp from 'amqplib';
 import mongoose from 'mongoose';
 import { Order } from '../app/models/Order'; // Importa o modelo do pedido
 import { OrderLog } from '../app/models/OrderLog';
+import 'dotenv/config';
 
 async function start() {
   try {
-    await mongoose.connect('mongodb://mongo:27017/waiterapp');
+    await mongoose.connect(process.env.MONGO_URL!);
     console.log('[MongoDB] Worker conectado com sucesso');
 
-    const connection = await amqp.connect('amqp://localhost');
+    const connection = await amqp.connect(process.env.RABBITMQ_URL!);
     const channel = await connection.createChannel();
     const queue = 'statusChange';
 
