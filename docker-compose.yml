@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+    api:
+        build: .
+        ports:
+            - "3000:3000"
+        depends_on:
+            - mongo
+            - rabbitmq
+        volumes:
+            - .:/app
+        restart: unless-stopped
+        command: node dist/index.js
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: admin
+        restart: unless-stopped
+
+    worker-order:
+        build: .
+        depends_on:
+            - mongo
+            - rabbitmq
+        command: node dist/workers/orderWorker.js
+        volumes:
+            - .:/app
+        restart: unless-stopped
+
+    worker-status-order:
+        build: .
+        depends_on:
+            - mongo
+            - rabbitmq
+        command: node dist/workers/statusWorker.js
+        volumes:
+            - .:/app
+        restart: unless-stopped
+
+    mongo:
+        image: mongo:6
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo_data:/data/db
+        restart: unless-stopped
+
+volumes:
+    mongo_data:

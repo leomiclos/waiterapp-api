@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Order } from '../../models/Order';
-import { getChannel } from '../../../../lib/rabbitmq';
+import { getChannel } from '../../../lib/rabbitmq';
 
 type OrderStatus = 'WAITING' | 'IN_PRODUCTION' | 'DONE';
 

@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import path from 'node:path';
-import { connectRabbitMQ } from '../lib/rabbitmq';
+import { connectRabbitMQ } from './lib/rabbitmq';
 
 import './workers/orderWorker';
 import './workers/statusWorker';
@@ -10,7 +10,7 @@ import './workers/statusWorker';
 async function bootstrap() {
   try {
     // Conectar ao MongoDB
-    await mongoose.connect('mongodb://localhost:27017/waiterapp');
+    await mongoose.connect('mongodb://mongo:27017/waiterapp');
     console.log('[MongoDB] Conectado com sucesso');
 
     // Conectar ao RabbitMQ

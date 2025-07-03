@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { Order } from '../../models/Order';
-import { getChannel } from '../../../../lib/rabbitmq';
+import { getChannel } from '../../../lib/rabbitmq';
 
 export async function createOrder(req: Request, res: Response) {
   try {

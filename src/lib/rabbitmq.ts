@@ -4,7 +4,7 @@ import amqp from 'amqplib';
 let channel: amqp.Channel;
 
 export async function connectRabbitMQ() {
-  const connection = await amqp.connect('amqp://localhost');
+const connection = await amqp.connect('amqp://admin:admin@rabbitmq');
   channel = await connection.createChannel();
   console.log('[RabbitMQ] Conectado com sucesso');
 

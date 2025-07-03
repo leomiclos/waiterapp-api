@@ -7,7 +7,7 @@ import { OrderLog } from '../app/models/OrderLog';
 async function start() {
     try {
         // 1. Conectar ao MongoDB
-        await mongoose.connect('mongodb://localhost:27017/waiterapp');
+        await mongoose.connect('mongodb://mongo:27017/waiterapp');
         console.log('[MongoDB] Worker conectado com sucesso');
 
         // 2. Conectar ao RabbitMQ

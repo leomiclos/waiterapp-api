@@ -6,7 +6,7 @@ import { OrderLog } from '../app/models/OrderLog';
 
 async function start() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/waiterapp');
+    await mongoose.connect('mongodb://mongo:27017/waiterapp');
     console.log('[MongoDB] Worker conectado com sucesso');
 
     const connection = await amqp.connect('amqp://localhost');
