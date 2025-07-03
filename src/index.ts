@@ -4,9 +4,12 @@ import { router } from './router';
 import path from 'node:path';
 import { connectRabbitMQ } from './lib/rabbitmq';
 import 'dotenv/config';  // já carrega as variáveis do .env
+import dotenvFlow from 'dotenv-flow';
 
 import './workers/orderWorker';
 import './workers/statusWorker';
+
+dotenvFlow.config();
 
 async function bootstrap() {
   try {
